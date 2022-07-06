@@ -64,7 +64,7 @@ const App = () => {
 
         {/* Dices */}
         <Grid item container xs={12} spacing={2}>
-          <Grid item xs={12} container justifyContent='center'>
+          <Grid item xs={12} wrap='nowrap' container justifyContent='center' sx={{ paddingLeft: 0 }} >
             <ReactDice
               numDice={2}
               dotColor='black'
@@ -72,6 +72,7 @@ const App = () => {
               outline
               outlineColor='black'
               dieSize={100}
+              margin={10}
               rollTime={1}
               defaultRoll={6}
               rollDone={handleRoll}

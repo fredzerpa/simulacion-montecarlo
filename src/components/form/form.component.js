@@ -29,7 +29,7 @@ const Form = ({ dicesRef }) => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" sx={{ padding: 0 }}>
       <Box
         sx={{
           display: 'flex',
