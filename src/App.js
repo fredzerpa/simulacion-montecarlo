@@ -8,7 +8,7 @@ import 'react-dice-complete/dist/react-dice-complete.css'
 import LogBox from './components/log-box/log-box.component';
 
 const getGameResults = (games = []) => {
-  if (!games.length) return { won: 0, lost: 0, plays: 0, total: 0 }
+  if (!games.length) return { won: 0, lost: 0, total: 0, wonGames: 0, lostGames: 0, totalGames: 0 }
 
   return games.reduce((result, diceNums) => {
     const dieOne = diceNums[0];
