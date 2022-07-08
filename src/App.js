@@ -2,7 +2,7 @@ import { Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Form from './components/form/form.component';
 import { ThemeProvider, useTheme } from '@mui/material/styles';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import ReactDice from 'react-dice-complete';
 import 'react-dice-complete/dist/react-dice-complete.css'
 import LogBox from './components/log-box/log-box.component';
@@ -13,14 +13,21 @@ const getGameResults = (games = []) => {
   return games.reduce((result, diceNums) => {
     const dieOne = diceNums[0];
     const dieTwo = diceNums[1];
+    const won = dieOne === dieTwo;
 
-    dieOne === dieTwo ? result.won += dieOne * dieTwo * 100 : result.lost -= 200;
+    if (won) {
+      result.won += dieOne * dieTwo * 100;
+      result.wonGames += 1
+    } else {
+      result.lost -= 200;
+      result.lostGames += 1
+    }
 
-    result.plays += 1;
     result.total = result.won + result.lost;
+    result.totalGames += 1;
 
     return result;
-  }, { won: 0, lost: 0, plays: 0, total: 0 })
+  }, { won: 0, lost: 0, total: 0, wonGames: 0, lostGames: 0, totalGames: 0 })
 }
 
 const App = () => {
@@ -139,6 +146,23 @@ const App = () => {
               <Grid item xs={6} sm={3} textAlign='center'>
                 <Typography variant='button' fontSize='small'>
                   Resultado: {isRolling ? 0 : gameResults.total}$
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid item container xs={12} mt={3}>
+              <Grid item xs={12} textAlign='center'>
+                <Typography variant='button' fontSize='small'>
+                  Probabilidades
+                </Typography>
+              </Grid>
+              <Grid item xs={6} textAlign='center'>
+                <Typography variant='button' fontSize='small'>
+                  Analitica: {(6 * 100 / 36).toFixed(2)}%
+                </Typography>
+              </Grid>
+              <Grid item xs={6} textAlign='center'>
+                <Typography variant='button' fontSize='small'>
+                  Monte Carlo: {!isRolling ? (logs.length ? (gameResults.wonGames * 100 / gameResults.totalGames).toFixed(2) : 0) : 0}%
                 </Typography>
               </Grid>
             </Grid>

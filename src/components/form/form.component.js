@@ -35,7 +35,7 @@ const Form = ({ dicesRef, logs, setLogs, isRolling, setIsRolling }) => {
       }
       // Only set the logs if it has any to add
       if (gameRoll.length) {
-        setLogs(gameRoll);
+        setLogs([...logs, ...gameRoll]);
       };
       dicesRef.current.rollAll();
     }
@@ -65,6 +65,7 @@ const Form = ({ dicesRef, logs, setLogs, isRolling, setIsRolling }) => {
                 label="# Iteraciones"
                 defaultValue={1}
                 autoFocus
+                InputProps={{ inputProps: { min: 0, max: 10 } }}
               />
             </Grid>
           </Grid>
