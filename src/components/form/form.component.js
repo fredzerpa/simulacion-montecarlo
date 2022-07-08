@@ -35,7 +35,7 @@ const Form = ({ dicesRef, logs, setLogs, isRolling, setIsRolling }) => {
       }
       // Only set the logs if it has any to add
       if (gameRoll.length) {
-        setLogs([...logs, ...gameRoll]);
+        setLogs(gameRoll);
       };
       dicesRef.current.rollAll();
     }
