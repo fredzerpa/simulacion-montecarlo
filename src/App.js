@@ -130,7 +130,7 @@ const App = () => {
             <Grid item container xs={12}>
               <Grid item xs={6} sm={3} textAlign='center'>
                 <Typography variant='button' fontSize='small'>
-                  Jugado: {isRolling ? 0 : gameResults.plays}
+                  Jugado: {isRolling ? 0 : gameResults.totalGames}
                 </Typography>
               </Grid>
               <Grid item xs={6} sm={3} textAlign='center'>
