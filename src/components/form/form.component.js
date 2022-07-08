@@ -4,27 +4,40 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { useState } from 'react';
 
-const recursive = (data, log, iteration) => {
-  const newLog = [...log, data];
-  return iteration ? recursive(data, newLog, iteration - 1) : log;
+const getDiceRollNumbers = (numDice = 1, totalFaces = 6) => {
+
+  const getRandomNumber = () => Math.floor(Math.random() * totalFaces) + 1;
+
+  const result = [];
+
+  for (let die = 0; die < numDice; die++) {
+    result.push(getRandomNumber());
+  }
+
+  return result;
 }
 
-const Form = ({ dicesRef }) => {
-  const [simulating, setSimulating] = useState(false);
-
+const Form = ({ dicesRef, logs, setLogs, isRolling, setIsRolling }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!simulating || true) {
-      const data = new FormData(event.currentTarget);
-      const iterations = Number(data.get('iterations'));
+    if (!isRolling) {
+      setIsRolling(true);
 
-      setSimulating(true);
-      for (let iteration = 0; iteration < iterations; iteration++) {
-        dicesRef.current.rollAll();
+      const data = new FormData(event.currentTarget);
+      const iterations = Math.floor(Number(data.get('iterations')));
+
+      const gameRoll = [];
+      // Starts at 1 because the dices will roll the last one
+      for (let iteration = 1; iteration < iterations; iteration++) {
+        // We have 2 dices
+        gameRoll.push(getDiceRollNumbers(2));
       }
-      setSimulating(false);
+      // Only set the logs if it has any to add
+      if (gameRoll.length) {
+        setLogs(gameRoll);
+      };
+      dicesRef.current.rollAll();
     }
   };
 
@@ -44,7 +57,6 @@ const Form = ({ dicesRef }) => {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
-                autoComplete="iterations"
                 name="iterations"
                 type='number'
                 required

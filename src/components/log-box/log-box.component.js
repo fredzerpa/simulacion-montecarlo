@@ -1,18 +1,19 @@
 import { Box } from "@mui/system";
 
-const LogBox = ({logData=''}) => {
+const LogBox = ({children}) => {
 
   return (
     <Box
-      component='textarea'
-      width={500}
-      height={200}
-      padding='1rem'
-      readOnly
-      style={{ resize: 'none' }}
-      placeholder='Registros de la simulacion'
-      value={logData}
+      component='div'
+      sx={{
+        border: '1px solid black',
+        padding: '1rem',
+        width: '100%',
+        height: '200px',
+        overflowY: 'scroll'
+      }}
     >
+      {children}
     </Box>
   )
 }
